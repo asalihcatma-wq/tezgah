@@ -28,13 +28,18 @@ function App() {
     },
   ];
 
+
   return (
     <div>
       <h1>Tezgah</h1>
       <div>
-        <img src={urunler[0].resim} alt={urunler[0].isim} />
-        <h3>{urunler[0].isim}</h3>
-        <p>{urunler[0].fiyat} TL</p>
+        {urunler.map((urun) => (
+          <div key={urun.id}>
+            <h2>{urun.isim}</h2>
+            <p>Fiyat: {urun.fiyat} TL</p>
+            <img src={urun.resim} alt={urun.isim} />
+          </div>
+        ))}
       </div>
     </div>
   );
