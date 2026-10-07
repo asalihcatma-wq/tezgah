@@ -1,11 +1,20 @@
 import { useState } from "react";
-import heroImg from "./assets/hero.png";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
 import "./App.css";
+
+
+  function UrunKarti(props) {
+  return <div  className="urun-karti">
+           <img src={props.urun.resim} alt={props.urun.isim} />
+            <h2>{props.urun.isim}</h2>
+            <p>Fiyat: {props.urun.fiyat}  TL</p> 
+          </div>;
+}
 
 function App() {
   const [count, setCount] = useState(0);
+
+
+  
 
   const urunler = [
     {
@@ -28,17 +37,15 @@ function App() {
     },
   ];
 
+  
+
 
   return (
     <div>
       <h1>Tezgah</h1>
-      <div>
+      <div className="urun-listesi">
         {urunler.map((urun) => (
-          <div key={urun.id}>
-            <h2>{urun.isim}</h2>
-            <p>Fiyat: {urun.fiyat} TL</p>
-            <img src={urun.resim} alt={urun.isim} />
-          </div>
+          <UrunKarti urun={urun} key={urun.id} />
         ))}
       </div>
     </div>
