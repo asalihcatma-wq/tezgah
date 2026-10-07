@@ -3,7 +3,7 @@ import "./App.css";
 
 
   function UrunKarti(props) {
-  return <div  className="urun-karti">
+  return <div  className="urun-karti"  onClick={() => console.log(props.urun.isim)}  >
            <img src={props.urun.resim} alt={props.urun.isim} />
             <h2>{props.urun.isim}</h2>
             <p>Fiyat: {props.urun.fiyat}  TL</p> 
@@ -44,7 +44,7 @@ function App() {
     <div>
       <h1>Tezgah</h1>
       <div className="urun-listesi">
-        {urunler.map((urun) => (
+        {urunler.map((urun) => ( 
           <UrunKarti urun={urun} key={urun.id} />
         ))}
       </div>
