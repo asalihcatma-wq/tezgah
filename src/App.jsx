@@ -1,22 +1,8 @@
 import { useState } from "react";
 import "./App.css";
+import { Routes, Route, useNavigate, useParams } from "react-router";
 
-
-  function UrunKarti(props) {
-  return <div  className="urun-karti"  onClick={() => console.log(props.urun.isim)}  >
-           <img src={props.urun.resim} alt={props.urun.isim} />
-            <h2>{props.urun.isim}</h2>
-            <p>Fiyat: {props.urun.fiyat}  TL</p> 
-          </div>;
-}
-
-function App() {
-  const [count, setCount] = useState(0);
-
-
-  
-
-  const urunler = [
+const urunler = [
     {
       id: 1,
       isim: "Ürün 1",
@@ -37,17 +23,62 @@ function App() {
     },
   ];
 
+
+  function UrunKarti(props) {
+  const navigate = useNavigate();
+  return ( <div  className="urun-karti"  onClick={() => navigate(`/urun/${props.urun.id}`)}> {/*template literal*/} 
+           <img src={props.urun.resim} alt={props.urun.isim} />
+            <h2>{props.urun.isim}</h2>
+            <p>Fiyat: {props.urun.fiyat}  TL</p> 
+          </div>);
+}
+
+function UrunDetay() {
+  const params = useParams();
+  const urun = urunler.find((u) => u.id === parseInt(params.id));
+
+  if (!urun) {
+    return <h2>Ürün bulunamadı</h2>;
+  }
+
+  return (
+    <div className="urun-detay">
+      <img src={urun.resim} alt={urun.isim} />
+      <h2>{urun.isim}</h2>
+      <p>Fiyat: {urun.fiyat} TL</p>
+      <button onClick={() => console.log("Sepete eklendi:", urun.isim)}>
+        Sepete Ekle
+      </button>
+    </div>
+  );
+}
+
+
+function App() {
+  const [count, setCount] = useState(0);
+
+
+  
+
+  
+
   
 
 
   return (
     <div>
       <h1>Tezgah</h1>
-      <div className="urun-listesi">
+       <Routes>
+  <Route path="/" element={
+   <div className="urun-listesi">
         {urunler.map((urun) => ( 
           <UrunKarti urun={urun} key={urun.id} />
         ))}
       </div>
+  } />
+  <Route path="/urun/:id" element={<UrunDetay />} />
+</Routes>
+
     </div>
   );
 }
