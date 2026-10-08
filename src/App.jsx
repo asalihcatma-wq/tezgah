@@ -33,7 +33,7 @@ const urunler = [
           </div>);
 }
 
-function UrunDetay() {
+function UrunDetay(props) {
   const params = useParams();
   const urun = urunler.find((u) => u.id === parseInt(params.id));
 
@@ -46,7 +46,7 @@ function UrunDetay() {
       <img src={urun.resim} alt={urun.isim} />
       <h2>{urun.isim}</h2>
       <p>Fiyat: {urun.fiyat} TL</p>
-      <button onClick={() => console.log("Sepete eklendi:", urun.isim)}>
+      <button onClick={() => props.sepeteEkle(urun)}> 
         Sepete Ekle
       </button>
     </div>
@@ -55,7 +55,11 @@ function UrunDetay() {
 
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [sepet, setSepet] = useState([]);
+
+  function sepeteEkle(urun) {
+    setSepet([...sepet, urun]);
+  }
 
 
   
@@ -67,16 +71,20 @@ function App() {
 
   return (
     <div>
-      <h1>Tezgah</h1>
+      <header className="ustbar">
+        <h1>Tezgah</h1>
+      <span>sepetim: {sepet.length}</span> 
+      </header>
        <Routes>
   <Route path="/" element={
    <div className="urun-listesi">
         {urunler.map((urun) => ( 
           <UrunKarti urun={urun} key={urun.id} />
-        ))}
+        ))
+        }
       </div>
   } />
-  <Route path="/urun/:id" element={<UrunDetay />} />
+  <Route path="/urun/:id" element={<UrunDetay  sepeteEkle={sepeteEkle} />} /> 
 </Routes>
 
     </div>
